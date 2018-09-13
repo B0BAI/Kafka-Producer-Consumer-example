@@ -1,1 +1,1 @@
-(Spurce)[https://dzone.com/articles/kafka-producer-and-consumer-example]
+[Source](https://dzone.com/articles/kafka-producer-and-consumer-example)
