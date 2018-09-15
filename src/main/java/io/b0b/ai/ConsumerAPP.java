@@ -12,9 +12,8 @@ import io.b0b.ai.constants.IKafkaConstants;
 import io.b0b.ai.consumer.ConsumerCreator;
 import io.b0b.ai.producer.ProducerCreator;
 
-public class App {
+public class ConsumerAPP {
     public static void main(String[] args) {
-//		runProducer();
         runConsumer();
     }
 
@@ -24,7 +23,7 @@ public class App {
         int noMessageToFetch = 0;
 
         while (true) {
-            final ConsumerRecords<Long, String> consumerRecords = consumer.poll(1000);
+            final ConsumerRecords<Long, String> consumerRecords = consumer.poll(10000);
             if (consumerRecords.count() == 0) {
                 noMessageToFetch++;
                 if (noMessageToFetch > IKafkaConstants.MAX_NO_MESSAGE_FOUND_COUNT)
@@ -42,25 +41,5 @@ public class App {
             consumer.commitAsync();
         }
         consumer.close();
-    }
-
-    static void runProducer() {
-        Producer<Long, String> producer = ProducerCreator.createProducer();
-
-        for (int index = 0; index < IKafkaConstants.MESSAGE_COUNT; index++) {
-            final ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(IKafkaConstants.TOPIC_NAME,
-                    "This is record " + index);
-            try {
-                RecordMetadata metadata = producer.send(record).get();
-                System.out.println("Record sent with key " + index + " to partition " + metadata.partition()
-                        + " with offset " + metadata.offset());
-            } catch (ExecutionException e) {
-                System.out.println("Error in sending record");
-                System.out.println(e);
-            } catch (InterruptedException e) {
-                System.out.println("Error in sending record");
-                System.out.println(e);
-            }
-        }
     }
 }
