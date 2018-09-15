@@ -1,15 +1,14 @@
-package com.gaurav.kafka.consumer;
+package io.b0b.ai.consumer;
 
 import java.util.Collections;
 import java.util.Properties;
 
+import io.b0b.ai.constants.IKafkaConstants;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-
-import com.gaurav.kafka.constants.IKafkaConstants;
 
 public class ConsumerCreator {
 
