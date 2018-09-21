@@ -7,7 +7,7 @@ public interface IKafkaConstants {
 
     String CLIENT_ID = "client1";
 
-    String TOPIC_NAME = "demo";
+    String TOPIC_NAME = "demo2";
 
     String GROUP_ID_CONFIG = "consumerGroup10";
 
@@ -18,4 +18,5 @@ public interface IKafkaConstants {
     String OFFSET_RESET_EARLIER = "earliest";
 
     Integer MAX_POLL_RECORDS = 1;
+    //properties.put("auto.offset.reset", "smallest")
 }
