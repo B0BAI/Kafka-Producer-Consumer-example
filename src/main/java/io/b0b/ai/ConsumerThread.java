@@ -29,11 +29,6 @@ public class ConsumerThread implements Runnable {
                 else
                     continue;
             }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             consumerRecords.forEach(record -> {
                 //System.out.println("Record Key " + record.key());

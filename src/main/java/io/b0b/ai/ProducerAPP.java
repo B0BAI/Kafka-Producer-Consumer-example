@@ -1,33 +1,37 @@
 package io.b0b.ai;
 
-import java.util.concurrent.ExecutionException;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import io.b0b.ai.pojo.MyObject;
 import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
-
-import io.b0b.ai.constants.IKafkaConstants;
 import io.b0b.ai.producer.ProducerCreator;
 
+
 public class ProducerAPP {
+
     public static void main(String[] args) {
-        runProducer();
-    }
+        Producer<Long, MyObject> producer;
+        int start = 0, end = 2, numberOfProducers = 5;
+        ExecutorService executor = Executors.newFixedThreadPool(numberOfProducers);
 
-    private static void runProducer() {
-        Producer<Long, MyObject> producer = ProducerCreator.createProducer();
-        for (int index = 1; index < 100; index++) {
-            MyObject co = new MyObject("NG1-" + index, "B0BS -" + index);
-
-            final ProducerRecord<Long, MyObject> record = new ProducerRecord<>(IKafkaConstants.TOPIC_NAME, co);
-            try {
-                RecordMetadata metadata = producer.send(record).get();
-                System.out.println(metadata.toString() + " Something though!");
-            } catch (ExecutionException | InterruptedException e) {
-                System.out.println("Error in sending record");
-                System.out.println(e);
-            }
+        for (int index = 0; index < numberOfProducers; ++index) {
+            producer = ProducerCreator.createProducer();
+            ProducerThread multipleProducers = new ProducerThread(producer, start, end, "Producer Thread — " + index);
+            executor.submit(multipleProducers);
+            start = end;
+            end += 3;
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            executor.shutdown();
+            try {
+                executor.awaitTermination(5000, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }));
     }
 }
