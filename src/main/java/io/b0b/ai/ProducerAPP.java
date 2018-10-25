@@ -22,7 +22,7 @@ public class ProducerAPP {
             ProducerThread multipleProducers = new ProducerThread(producer, start, end, "Producer Thread — " + index);
             executor.submit(multipleProducers);
             start = end;
-            end += 3;
+            end += 100;
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

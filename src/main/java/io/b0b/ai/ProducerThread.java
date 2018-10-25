@@ -25,8 +25,8 @@ public class ProducerThread implements Runnable {
     @Override
     public void run() {
         for (int index = this.loopStart; index < this.loopsCount; index++) {
-            MyObject co = new MyObject("NG1-" + index, this.info);
-            final ProducerRecord<Long, MyObject> record = new ProducerRecord<>(IKafkaConstants.TOPIC_NAME, co);
+            MyObject myObject = new MyObject("NG1-" + index, this.info);
+            final ProducerRecord<Long, MyObject> record = new ProducerRecord<>(IKafkaConstants.TOPIC_NAME, myObject);
             try {
                 RecordMetadata metadata = producer.send(record).get();
                 System.out.println(metadata.toString() + " Something though!");

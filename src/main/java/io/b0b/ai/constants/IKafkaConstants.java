@@ -1,13 +1,13 @@
 package io.b0b.ai.constants;
 
 public interface IKafkaConstants {
-    String KAFKA_BROKERS = "localhost:9092";
+    String KAFKA_BROKERS = "https://127.0.0.1:9092";
 
     Integer MESSAGE_COUNT = 1000;
 
     String CLIENT_ID = "client1";
 
-    String TOPIC_NAME = "demo2";
+    String TOPIC_NAME = "demo_yo";
 
     String GROUP_ID_CONFIG = "consumerGroup10";
 
